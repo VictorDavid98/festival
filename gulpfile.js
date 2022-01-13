@@ -2,19 +2,27 @@ const {src, dest, watch, parallel} = require('gulp');
 //css
 const sass = require('gulp-sass')(require('sass'));
 const plumber = require('gulp-plumber');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
 //Imagenes
 const cache = require('gulp-cache')
 const imagemin = require('gulp-imagemin');
 const webp = require('gulp-webp');
 const avif = require('gulp-avif');
-
+//javascript
+const terser = require('gulp-terser-js');
 
 
 function css(done){
     //Identificar el archivo .scss a compilar
     src('src/scss/**/*.scss')
+    .pipe(sourcemaps.init())
     .pipe( plumber())
     .pipe( sass())//Compilarlo
+    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(sourcemaps.write('.'))
     .pipe( dest('build/css'))//Almacenarla
     
     done();
@@ -54,6 +62,9 @@ function dev(done ){
 }
 function javascript(done){
     src('src/js/**/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(terser())
+    .pipe(sourcemaps.write('.'))
     .pipe(dest('build/js'));
     done();
 }

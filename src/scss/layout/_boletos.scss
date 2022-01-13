@@ -6,6 +6,8 @@
     h3{
         text-align: center;
         color: v.$blanco;
+        font-size: 4rem;
+        font-weight: 700
     }
     .contenedor-boleto{
         @include m.tablet{
@@ -16,6 +18,13 @@
 }
 .pase{
     color: black;
+    p{
+        text-align: center;
+        color: v.$blanco;
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 3rem;
+    }
     .nombre-pase{
         text-align: center;
         font-size: 2.8rem;
